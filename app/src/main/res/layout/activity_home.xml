@@ -8,13 +8,11 @@
     tools:context=".HomeActivity"
     android:padding="8dp">
 
-    <GridView
-        android:id="@+id/grid"
+    <androidx.recyclerview.widget.RecyclerView
+        android:scrollbars="horizontal"
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="2"
-        android:horizontalSpacing="8dp"
-        android:verticalSpacing="8dp"/>
+        android:layout_height="match_parent"/>
 
 
 </LinearLayout>

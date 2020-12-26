@@ -8,17 +8,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.util.Formatter;
+
 public class SinglePageApp extends AppCompatActivity {
-TextView nameOfitem , Price ,des;
-Button plus , btnNummer ,mins ;
-int x;
+    TextView nameOfitem , Price ,des;
+    TextView plus , btnNummer ,mins ;
+    int x;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_page_app);
         String title = getIntent().getStringExtra("title");
-        String price = getIntent().getStringExtra("Price");
-        String Des  = getIntent().getStringExtra("Details");
+        String price = getIntent().getStringExtra("price");
+        String Des  = getIntent().getStringExtra("details");
         x = 1;
 
         nameOfitem =findViewById(R.id.jotext);
@@ -33,9 +36,10 @@ int x;
             public void onClick(View v) {
                 x++;
                 btnNummer.setText(x+"");
-                int temp = Integer.parseInt(price) * x;
-
-                Price.setText("$" +temp);
+                double temp = Double.parseDouble(price) * x;
+                Formatter fmt = new Formatter();
+                fmt.format("%.2f", temp);
+                Price.setText("$" +fmt);
 
             }
         });
@@ -45,8 +49,10 @@ int x;
                 if(x>0){
                     x--;
                     btnNummer.setText(x+"");
-                    int temp = Integer.parseInt(price) * x;
-                    Price.setText("$" +temp);
+                    double temp = Double.parseDouble(price) * x;
+                    Formatter fmt = new Formatter();
+                    fmt.format("%.2f", temp);
+                    Price.setText("$" +fmt);
                 }
 
             }

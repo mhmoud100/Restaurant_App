@@ -7,6 +7,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <path
         android:strokeWidth="4"
-        android:fillColor="@android:color/white"
+        android:fillColor="@color/yellow"
         android:pathData="M7,0 L17,0 L17,24 L7,24 z"/>
 </vector>
