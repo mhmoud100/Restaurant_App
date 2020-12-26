@@ -8,9 +8,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,12 +36,13 @@ public class HomeActivity extends AppCompatActivity {
 
     ImageView drawer;
     private SlidingRootNav slidingRootNav;
+    Boolean isAdmin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         drawer = findViewById(R.id.drawer);
-
+        isAdmin = false;
         slidingRootNav = new SlidingRootNavBuilder(this)
 
                 .withMenuOpened(false)
@@ -60,10 +64,16 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         });
+        SharedPreferences sharedPreferences = getSharedPreferences("file" , Context.MODE_PRIVATE);
+        Boolean isAdmin = sharedPreferences.getBoolean("isAdmin" , false);
         TextView name = view.findViewById(R.id.textname);
         TextView home = view.findViewById(R.id.home);
         TextView profile= view.findViewById(R.id.profile);
         TextView logout = view.findViewById(R.id.logout);
+        TextView add = view.findViewById(R.id.add);
+        if(isAdmin){
+            add.setVisibility(View.VISIBLE);
+        }
         name.setText("Hello "+ FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +97,12 @@ public class HomeActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(HomeActivity.this, AuthActivity.class));
                 HomeActivity.this.finishAffinity();
+            }
+        });
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, activity_add_product.class));
             }
         });
 
