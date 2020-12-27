@@ -20,24 +20,20 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class WelcomeActivity extends AppCompatActivity {
-Boolean isAdmin;
+public static User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        isAdmin = false;
-        FirebaseFirestore.getInstance().collection("Users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+        FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful() && task.getResult() != null){
-                    for(DocumentSnapshot doc : task.getResult()){
-                        if(FirebaseAuth.getInstance().getCurrentUser().getUid().equals(doc.getId())){
-                            isAdmin = doc.getBoolean("admin");
-                        }
-                    }
+                    user = task.getResult().toObject(User.class);
                     SharedPreferences sharedPreferences = getSharedPreferences("file" , Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("isAdmin" , isAdmin);
+                    editor.putBoolean("isAdmin" , user.getAdmin());;
                     editor.apply();
                 }
             }

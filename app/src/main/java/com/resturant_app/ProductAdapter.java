@@ -72,6 +72,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 intent.putExtra("ArrivalTime", products.get(position).getArrivalTime());
                 intent.putExtra("rating", products.get(position).getRating());
                 intent.putExtra("Image", products.get(position).getImageURL());
+                intent.putExtra("id", products.get(position).getPid());
                 context.startActivity(intent);
             }
         });

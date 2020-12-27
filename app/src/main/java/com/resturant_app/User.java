@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 public class User {
     private Boolean isAdmin;
-    private ArrayList<String> carts, orders;
+    private ArrayList<Cart> carts, orders;
 
-    public User(Boolean isAdmin, ArrayList<String> carts, ArrayList<String> orders) {
+
+    public User(){}
+    public User(Boolean isAdmin, ArrayList<Cart> carts, ArrayList<Cart> orders) {
         this.isAdmin = isAdmin;
         this.carts = carts;
         this.orders = orders;
@@ -20,19 +22,19 @@ public class User {
         isAdmin = admin;
     }
 
-    public ArrayList<String> getCarts() {
+    public ArrayList<Cart> getCarts() {
         return carts;
     }
 
-    public void setCarts(ArrayList<String> carts) {
+    public void setCarts(ArrayList<Cart> carts) {
         this.carts = carts;
     }
 
-    public ArrayList<String> getOrders() {
+    public ArrayList<Cart> getOrders() {
         return orders;
     }
 
-    public void setOrders(ArrayList<String> orders) {
+    public void setOrders(ArrayList<Cart> orders) {
         this.orders = orders;
     }
 }
