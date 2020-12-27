@@ -75,17 +75,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 context.startActivity(intent);
             }
         });
-        StorageReference ref = FirebaseStorage.getInstance().getReference();
-        ref.child("Products").child(item.getPid()).child("Product_Image").getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful() && task.getResult() != null) {
-                    Glide.with(context).load(task.getResult()).into(holder.photo);
-                } else {
-                    holder.photo.setImageResource(R.mipmap.logo_test);
-                }
-            }
-        });
+        if(item.getImageURL() != null){
+            Glide.with(context).load(item.getImageURL()).into(holder.photo);
+        } else {
+            holder.photo.setImageResource(R.mipmap.logo_test);
+        }
+
+
 
     }
     public static class ViewHolder extends RecyclerView.ViewHolder{
