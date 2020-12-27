@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Formatter;
 
 public class SinglePageApp extends AppCompatActivity {
-    TextView nameOfitem , Price ,des;
+    TextView nameOfitem , Price ,des, Details, arrivalTime, Rating;
     TextView plus , btnNummer ,mins ;
     ImageView imageView;
     FloatingActionButton fab;
@@ -41,8 +41,11 @@ public class SinglePageApp extends AppCompatActivity {
         setContentView(R.layout.activity_single_page_app);
         String title = getIntent().getStringExtra("title");
         String price = getIntent().getStringExtra("price");
-        String Des  = getIntent().getStringExtra("details");
+        String Des  = getIntent().getStringExtra("desc");
+        String details  = getIntent().getStringExtra("details");
         String imageUrl = getIntent().getStringExtra("Image");
+        String ArrivalTime = getIntent().getStringExtra("ArrivalTime");
+        String rating = getIntent().getStringExtra("rating");
         String id = getIntent().getStringExtra("id");
         x = 1;
         AlreadyAdded = false;
@@ -53,8 +56,10 @@ public class SinglePageApp extends AppCompatActivity {
         mins = findViewById(R.id.jobtnmis);
         des = findViewById(R.id.joDes);
         imageView = findViewById(R.id.imageView);
-        fab =findViewById(R.id.fab);
-
+        fab = findViewById(R.id.fab);
+        Details = findViewById(R.id.desc);
+        Rating = findViewById(R.id.rating);
+        arrivalTime = findViewById(R.id.arrival_time);
         if(imageUrl != null){
             Glide.with(this).load(imageUrl).into(imageView);
         }
@@ -63,14 +68,12 @@ public class SinglePageApp extends AppCompatActivity {
             if(WelcomeActivity.user.getCarts().get(i).getId().equals(id)){
                 fab.setImageResource(R.drawable.ic_done);
                 AlreadyAdded = true;
-//                fab.setClickable(false);
             }
         }
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Cart cart = new Cart(id, btnNummer.getText().toString());
-                Log.i("tag", WelcomeActivity.user.getCarts().size()+"");
 
                 if(AlreadyAdded){
                     Toast.makeText(SinglePageApp.this, "Already Added", Toast.LENGTH_SHORT).show();
@@ -80,6 +83,7 @@ public class SinglePageApp extends AppCompatActivity {
                         .update("carts",FieldValue.arrayUnion(cart)).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        WelcomeActivity.user.addtoCart(cart);
                         fab.setImageResource(R.drawable.ic_done);
                         AlreadyAdded = true;
                     }
@@ -96,7 +100,7 @@ public class SinglePageApp extends AppCompatActivity {
                 double temp = Double.parseDouble(price) * x;
                 Formatter fmt = new Formatter();
                 fmt.format("%.2f", temp);
-                Price.setText("$" +fmt);
+                Price.setText(String.valueOf(fmt));
 
             }
         });
@@ -109,7 +113,7 @@ public class SinglePageApp extends AppCompatActivity {
                     double temp = Double.parseDouble(price) * x;
                     Formatter fmt = new Formatter();
                     fmt.format("%.2f", temp);
-                    Price.setText("$" +fmt);
+                    Price.setText(String.valueOf(fmt));
                 }
 
             }
@@ -118,8 +122,11 @@ public class SinglePageApp extends AppCompatActivity {
 
 
         nameOfitem.setText(title);
-        Price.setText("$" +price);
-        des.setText(Des);
+        Price.setText(price);
+        des.setText(details);
+        Details.setText(Des);
+        Rating.setText(rating);
+        arrivalTime.setText(ArrivalTime);
     }
 
 }

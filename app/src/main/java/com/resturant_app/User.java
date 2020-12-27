@@ -37,4 +37,8 @@ public class User {
     public void setOrders(ArrayList<Cart> orders) {
         this.orders = orders;
     }
+
+    public void addtoCart(Cart cart){this.carts.add(cart);}
+
+    public void addtoOrder(Cart cart){this.orders.add(cart);}
 }

@@ -28,6 +28,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:background="@drawable/top_corner_container"
+                android:padding="18dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -46,29 +47,70 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
-
-                        android:text="The Name of Prodect"
+                        android:textStyle="bold"
                         android:textColor="#000000"
                         android:textSize="30sp" />
-
-                    <TextView
-                        android:id="@+id/jocost"
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        >
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:textColor="@color/yellow"
+                            android:textSize="20sp"
+                            android:text="$ "/>
+                    <TextView
+                        android:id="@+id/jocost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:gravity="end"
-                        android:text="$ 500"
+
+
                         android:textColor="#000000"
                         android:textSize="30sp" />
-                </LinearLayout>
+                    </LinearLayout>
 
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:textSize="20sp"
+                        android:textColor="@color/black"
+                        android:drawablePadding="8dp"
+                        android:drawableStart="@drawable/ic_star"
+                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end">
+                    <TextView
+                        android:id="@+id/arrival_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:drawablePadding="8dp"
+                        android:textColor="@color/black"
+                        android:drawableStart="@drawable/ic_alarm_clock"
+                        />
+                    </LinearLayout>
+                </LinearLayout>
                 <TextView
                     android:id="@+id/textView5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Details"
                     android:textColor="#000000"
-                    android:textSize="35sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/joDes"
@@ -76,6 +118,17 @@
                     android:layout_height="wrap_content"
                     android:text="TextView"
                     android:textSize="18sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Description"
+                    android:textColor="@color/black"
+                    android:textSize="30sp"/>
+                <TextView
+                    android:id="@+id/desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
 
             </LinearLayout>
         </LinearLayout>
@@ -86,7 +139,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/plus"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="310dp"
+        android:layout_marginTop="320dp"
         app:layout_constraintStart_toStartOf="parent"
 
         app:layout_constraintTop_toTopOf="parent"
