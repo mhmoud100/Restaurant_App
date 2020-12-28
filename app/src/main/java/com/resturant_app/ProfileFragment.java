@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileFragment extends Fragment {
 
-TextView userName , userEmail , userPhone;
+TextView userName , userEmail;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -22,11 +22,9 @@ TextView userName , userEmail , userPhone;
 
         userName = view.findViewById(R.id.joUserName1);
         userEmail = view.findViewById(R.id.joEmail);
-        userPhone = view.findViewById(R.id.joPhone);
 
         userName.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         userEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-        userPhone.setText(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
         return view;
     }
 }

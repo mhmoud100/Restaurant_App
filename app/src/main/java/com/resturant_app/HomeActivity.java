@@ -69,8 +69,10 @@ public class HomeActivity extends AppCompatActivity {
         TextView name = view.findViewById(R.id.textname);
         TextView home = view.findViewById(R.id.home);
         TextView profile= view.findViewById(R.id.profile);
+        TextView cart = view.findViewById(R.id.cart);
         TextView logout = view.findViewById(R.id.logout);
         TextView add = view.findViewById(R.id.add);
+
         if(isAdmin){
             add.setVisibility(View.VISIBLE);
         }
@@ -79,6 +81,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 profile.setTextColor(Color.BLACK);
+                cart.setTextColor(Color.BLACK);
                 home.setTextColor(Color.parseColor("#F1C852"));
                 setFragment(new HomeFragment());
             }
@@ -87,10 +90,21 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 home.setTextColor(Color.BLACK);
+                cart.setTextColor(Color.BLACK);
                 profile.setTextColor(Color.parseColor("#F1C852"));
                 setFragment(new ProfileFragment());
             }
         });
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                home.setTextColor(Color.BLACK);
+                profile.setTextColor(Color.BLACK);
+                cart.setTextColor(Color.parseColor("#F1C852"));
+                setFragment(new CartFragment());
+            }
+        });
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

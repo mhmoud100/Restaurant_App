@@ -63,11 +63,12 @@ public class SinglePageApp extends AppCompatActivity {
         if(imageUrl != null){
             Glide.with(this).load(imageUrl).into(imageView);
         }
-
-        for(int i = 0; i < WelcomeActivity.user.getCarts().size(); i++){
-            if(WelcomeActivity.user.getCarts().get(i).getId().equals(id)){
-                fab.setImageResource(R.drawable.ic_done);
-                AlreadyAdded = true;
+        if(!WelcomeActivity.user.getCarts().isEmpty()) {
+            for (int i = 0; i < WelcomeActivity.user.getCarts().size(); i++) {
+                if (WelcomeActivity.user.getCarts().get(i).getId().equals(id)) {
+                    fab.setImageResource(R.drawable.ic_done);
+                    AlreadyAdded = true;
+                }
             }
         }
         fab.setOnClickListener(new View.OnClickListener() {

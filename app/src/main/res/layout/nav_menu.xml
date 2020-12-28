@@ -43,7 +43,7 @@
         android:orientation="vertical">
         <TextView
             android:id="@+id/home"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Home"
             android:textColor="@color/black"
@@ -51,9 +51,19 @@
             android:textAppearance="?android:textAppearanceMedium" />
         <TextView
             android:id="@+id/profile"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Profile"
+            android:textColor="@color/black"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:padding="8dp"
+            android:textAppearance="?android:textAppearanceMedium" />
+        <TextView
+            android:id="@+id/cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cart"
             android:textColor="@color/black"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
@@ -72,7 +82,7 @@
             android:textAppearance="?android:textAppearanceMedium" />
         <TextView
             android:id="@+id/logout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Logout"
             android:textColor="@color/black"
