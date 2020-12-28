@@ -25,19 +25,20 @@ public static User user;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-
-        FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful() && task.getResult() != null){
-                    user = task.getResult().toObject(User.class);
-                    SharedPreferences sharedPreferences = getSharedPreferences("file" , Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("isAdmin" , user.getAdmin());;
-                    editor.apply();
+        if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+            FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        user = task.getResult().toObject(User.class);
+                        SharedPreferences sharedPreferences = getSharedPreferences("file", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("isAdmin", user.getAdmin());
+                        editor.apply();
+                    }
                 }
-            }
-        });
+            });
+        }
         Timer();
 
     }

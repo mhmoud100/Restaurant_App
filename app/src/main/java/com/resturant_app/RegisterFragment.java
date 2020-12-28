@@ -96,9 +96,7 @@ public class RegisterFragment extends Fragment {
                                 if (task.isSuccessful()){
                                     final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-                                    currentUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
+
 
                                             User user = new User(false, new ArrayList<>(), new ArrayList<>());
                                             FirebaseFirestore.getInstance().collection("Users")
@@ -116,16 +114,15 @@ public class RegisterFragment extends Fragment {
                                                                         @Override
                                                                         public void onComplete(@NonNull Task<Void> task) {
                                                                             if (task.isSuccessful()) {
-                                                                                Log.i("tag", "done");
+                                                                                gotoHome.GoToHome();
                                                                             }
                                                                         }
                                                                     });
 
-                                                            gotoHome.GoToHome();
+
                                                         }
                                                     });
-                                        }
-                                    });
+
                                 } else {
                                     loadingLayout.setVisibility(View.GONE);
                                     showMessage(task.getException().getMessage());
