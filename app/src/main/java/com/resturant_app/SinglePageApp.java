@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class SinglePageApp extends AppCompatActivity {
     TextView plus , btnNummer ,mins ;
     ImageView imageView;
     FloatingActionButton fab;
+    LinearLayout cartQuantity;
     int x;
     Boolean AlreadyAdded;
 
@@ -60,17 +62,22 @@ public class SinglePageApp extends AppCompatActivity {
         Details = findViewById(R.id.desc);
         Rating = findViewById(R.id.rating);
         arrivalTime = findViewById(R.id.arrival_time);
+        cartQuantity = findViewById(R.id.linearLayout);
         if(imageUrl != null){
             Glide.with(this).load(imageUrl).into(imageView);
         }
         if(!WelcomeActivity.user.getCarts().isEmpty()) {
+
             for (int i = 0; i < WelcomeActivity.user.getCarts().size(); i++) {
                 if (WelcomeActivity.user.getCarts().get(i).getId().equals(id)) {
                     fab.setImageResource(R.drawable.ic_done);
+                    cartQuantity.setVisibility(View.GONE);
                     AlreadyAdded = true;
                 }
             }
         }
+
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,6 +86,9 @@ public class SinglePageApp extends AppCompatActivity {
                 if(AlreadyAdded){
                     Toast.makeText(SinglePageApp.this, "Already Added", Toast.LENGTH_SHORT).show();
                     return;
+                }else if(!WelcomeActivity.user.getOrders().isEmpty()){
+                    Toast.makeText(SinglePageApp.this, "You Can't Add to Cart there is Order Coming", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
                         .update("carts",FieldValue.arrayUnion(cart)).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -86,6 +96,7 @@ public class SinglePageApp extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         WelcomeActivity.user.addtoCart(cart);
                         fab.setImageResource(R.drawable.ic_done);
+                        cartQuantity.setVisibility(View.GONE);
                         AlreadyAdded = true;
                     }
                 });

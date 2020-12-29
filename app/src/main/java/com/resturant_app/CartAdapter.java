@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -18,6 +19,8 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Formatter;
 
@@ -26,10 +29,12 @@ import androidx.annotation.NonNull;
 public class CartAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<Cart> carts;
+    private String name;
 
-    public CartAdapter(Context context, ArrayList<Cart> carts) {
+    public CartAdapter(Context context, ArrayList<Cart> carts, String name) {
         this.context = context;
         this.carts = carts;
+        this.name = name;
     }
 
     @Override
@@ -55,7 +60,9 @@ public class CartAdapter extends BaseAdapter {
         TextView title = convertView.findViewById(R.id.food_name);
         TextView desc = convertView.findViewById(R.id.food_desc);
         TextView price = convertView.findViewById(R.id.food_price);
-        TextView quantity = convertView.findViewById(R.id.jobtnNumber);
+
+
+        TextView q = convertView.findViewById(R.id.quantity);
         Cart item = carts.get(position);
         FirebaseFirestore.getInstance().collection("Products").document(item.getId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -70,6 +77,11 @@ public class CartAdapter extends BaseAdapter {
                 }
             }
         });
+        if(name.equals("Profile")){
+
+            delete.setVisibility(View.GONE);
+        }
+        q.setText("quantity :"+carts.get(position).getQuantity());
         FirebaseStorage.getInstance().getReference().child("Products").child(item.getId()).child("Product_Image").getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
@@ -94,7 +106,7 @@ public class CartAdapter extends BaseAdapter {
                 });
             }
         });
-        quantity.setText(item.getQuantity());
+
         return convertView;
     }
 }
