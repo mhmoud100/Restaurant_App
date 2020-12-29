@@ -44,5 +44,7 @@ public class User {
 
     public void removeAll(){this.carts.clear();}
 
+    public void removeAllorders(){this.orders.clear();}
+
     public void addtoOrder(ArrayList<Cart> carts){this.orders = carts;}
 }

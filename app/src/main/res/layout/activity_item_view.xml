@@ -11,7 +11,14 @@
     android:layout_marginHorizontal="8dp"
     android:descendantFocusability="blocksDescendants"
     android:layout_marginVertical="8dp">
-
+   <ImageView
+       android:id="@+id/delete"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:src="@drawable/ic_delete"
+       android:layout_gravity="end"
+       android:layout_marginEnd="8dp"
+       android:visibility="gone"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

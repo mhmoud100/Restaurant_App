@@ -1,18 +1,26 @@
 package com.resturant_app;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -32,17 +40,19 @@ import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements ShowNotification {
 
     ImageView drawer;
     private SlidingRootNav slidingRootNav;
     Boolean isAdmin;
+    private NotificationManagerCompat notificationManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         drawer = findViewById(R.id.drawer);
         isAdmin = false;
+        notificationManager = NotificationManagerCompat.from(this);
         slidingRootNav = new SlidingRootNavBuilder(this)
 
                 .withMenuOpened(false)
@@ -127,6 +137,73 @@ public class HomeActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.coordinator_layout, fragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void Show() {
+
+
+            // for (long i = Time; i < 86400000; i = i += 60000) {
+
+            new CountDownTimer(10000, 10000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+
+                }
+
+                @Override
+                public void onFinish() {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                            String CHANNEL_ID = "my_channel_01";
+                            CharSequence name = "my_channel";
+                            String Description = "This is my channel";
+                            int importance = NotificationManager.IMPORTANCE_HIGH;
+                            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+                            mChannel.setDescription(Description);
+                            mChannel.enableLights(true);
+                            mChannel.setLightColor(Color.RED);
+                            mChannel.enableVibration(true);
+                            mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                            mChannel.setShowBadge(false);
+                            notificationManager.createNotificationChannel(mChannel);
+                        }
+
+                        Notification notification = new NotificationCompat.Builder(HomeActivity.this, "my_channel_01")
+                                .setContentTitle("Resturant App")
+                                .setContentText("الاكل وصل يا زميييلي (:")
+                                .setSmallIcon(R.mipmap.logo_test)
+                                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                                .build();
+
+                        notificationManager.notify(1, notification);
+
+
+
+                    WelcomeActivity.user.removeAllorders();
+                    FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .update("orders",WelcomeActivity.user.getOrders()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(HomeActivity.this, "Done", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    }
+
+
+                }
+            }.start();
+            // }
+
+
+
+//        @RequiresApi(api = Build.VERSION_CODES.M)
+//        public void ShowNotification() {
+//
+////        Toast.makeText(getContext(), "Time", Toast.LENGTH_SHORT).show();
+//
+//        }
     }
 }
 //FirebaseAuth.getInstance().signOut();

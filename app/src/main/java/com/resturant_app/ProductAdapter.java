@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
@@ -61,7 +62,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.title.setText(item.getTitle());
         holder.desc.setText(item.getDesc());
         holder.price.setText(item.getPrice());
-        holder.linear.setOnClickListener(new View.OnClickListener() {
+        holder.photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, SinglePageApp.class);
@@ -76,6 +77,22 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 context.startActivity(intent);
             }
         });
+        if(WelcomeActivity.user.getAdmin()){
+         holder.delete.setVisibility(View.VISIBLE);
+        }
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseFirestore.getInstance().collection("Products").document(products.get(position).getPid()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
+                        products.remove(position);
+                        notifyDataSetChanged();
+                    }
+                });
+            }
+        });
 //        Log.i("tag", ""+(products.get(position).getImageURL() ));
         if(item.getImageURL() != null){
 
@@ -88,7 +105,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     }
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView photo;
+        ImageView photo, delete;
         TextView title, desc, price;
         LinearLayout linear;
         ViewHolder(View view){
@@ -98,6 +115,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
              price = view.findViewById(R.id.item_price);
              photo = view.findViewById(R.id.item_image);
              linear = view.findViewById(R.id.linear1);
+             delete = view.findViewById(R.id.delete);
 
         }
 

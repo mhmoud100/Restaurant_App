@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -43,7 +44,15 @@ public class CartFragment extends Fragment {
     FloatingActionButton buy;
     String text;
     AlertDialog alertDialog;
-    private NotificationManagerCompat notificationManager;
+
+    private ShowNotification showNotification;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        showNotification = (ShowNotification) context;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,9 +61,9 @@ public class CartFragment extends Fragment {
         cartList = view.findViewById(R.id.cart_list);
         buy = view.findViewById(R.id.buy);
         carts = WelcomeActivity.user.getCarts();
-        adapter = new CartAdapter(getContext(), carts);
+        adapter = new CartAdapter(getContext(), carts, "Cart");
         cartList.setAdapter(adapter);
-        notificationManager = NotificationManagerCompat.from(getContext());
+
 
 
         buy.setOnClickListener(new View.OnClickListener() {
@@ -100,21 +109,25 @@ public class CartFragment extends Fragment {
                                 public void onComplete(@NonNull Task<Void> task) {
 //                                    Toast.makeText(getContext(), "Done", Toast.LENGTH_SHORT).show();
                                     WelcomeActivity.user.addtoOrder(carts);
-                                    Timer();
+                                    Log.i("tag", carts.get(0).getId()+"");
+                                    Log.i("tag", WelcomeActivity.user.getOrders().size()+"");
+                                    showNotification.Show();
 
+                                    WelcomeActivity.user.removeAll();
+                                    adapter.notifyDataSetChanged();
+                                    FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                            .update("carts",WelcomeActivity.user.getCarts()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+//                                            Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 }
                             });
+//                        Log.i("tag", carts.size()+"");
 
-                        carts.clear();
-                        WelcomeActivity.user.removeAll();
-                        adapter.notifyDataSetChanged();
-                        FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                .update("carts",carts).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+
+
                     }
                 });
 
@@ -123,59 +136,5 @@ public class CartFragment extends Fragment {
 
         return view;
     }
-    public void Timer() {
 
-        // for (long i = Time; i < 86400000; i = i += 60000) {
-
-        new CountDownTimer(4000, 4000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            @Override
-            public void onFinish() {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    ShowNotification();
-                }
-
-
-            }
-        }.start();
-        // }
-
-
-    }
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public void ShowNotification() {
-
-        Toast.makeText(getContext(), "Time", Toast.LENGTH_SHORT).show();
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            String CHANNEL_ID = "my_channel_01";
-            CharSequence name = "my_channel";
-            String Description = "This is my channel";
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
-            mChannel.setDescription(Description);
-            mChannel.enableLights(true);
-            mChannel.setLightColor(Color.RED);
-            mChannel.enableVibration(true);
-            mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-            mChannel.setShowBadge(false);
-            notificationManager.createNotificationChannel(mChannel);
-        }
-
-        Notification notification = new NotificationCompat.Builder(getContext(), "my_channel_01")
-                .setContentTitle("Resturant App")
-                .setContentText("الاكل وصل يا زميييلي (:")
-                .setSmallIcon(R.mipmap.logo_test)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_REMINDER)
-                .build();
-
-        notificationManager.notify(1, notification);
-
-
-
-    }
 }
