@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileFragment">
+    android:orientation="vertical"
+    tools:context=".ProfileFragment"
+    android:padding="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -63,4 +65,20 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Orders"
+        android:textColor="@color/yellow"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:textStyle="bold"/>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/orders_list"
+        android:layout_marginTop="8dp"
+        android:divider="@color/white"
+        android:dividerHeight="8dp"/>
+
+</LinearLayout>

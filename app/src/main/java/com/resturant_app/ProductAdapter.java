@@ -76,7 +76,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 context.startActivity(intent);
             }
         });
+//        Log.i("tag", ""+(products.get(position).getImageURL() ));
         if(item.getImageURL() != null){
+
             Glide.with(context).load(item.getImageURL()).into(holder.photo);
         } else {
             holder.photo.setImageResource(R.mipmap.logo_test);

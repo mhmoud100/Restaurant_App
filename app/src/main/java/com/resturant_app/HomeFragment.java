@@ -27,6 +27,7 @@ public class HomeFragment extends Fragment {
     ArrayList<Product> products;
     RecyclerView productView;
     ProductAdapter adapter;
+    int length;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class HomeFragment extends Fragment {
         productView = view.findViewById(R.id.recycler_view);
         productView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false));
         products = new ArrayList<>();
-
+        length = 0;
 
         FirebaseFirestore.getInstance().collection("Products").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -51,16 +52,21 @@ public class HomeFragment extends Fragment {
                             public void onComplete(@NonNull Task<Uri> task) {
                                 if(task.isSuccessful() && task.getResult() != null) {
                                     product.setImageURL(task.getResult().toString());
+//                                    Log.i("tag", task.getResult().toString());
+                                    adapter.notifyDataSetChanged();
+                                    length++;
                                 }
                             }
                         });
 
                         products.add(product);
                     }
+
                     adapter = new ProductAdapter(getContext(), products);
                     productView.setItemViewCacheSize(products.size());
                     productView.setAdapter(adapter);
 
+//                    Log.i("tag", ""+length);
                 }else{
                     Toast.makeText(getContext(), "Error", Toast.LENGTH_LONG).show();
                 }
