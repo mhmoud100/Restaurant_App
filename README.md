@@ -1,11 +1,6 @@
-# Landing Page Project
-This Project contains Some Sections and the User can move around them using Nav Bar and the nav links is made dynamicly 
-## Table of Contents
--Nav
--Section
--footer
-
-* [Instructions](#instructions)
-
-## Instructions
-
+# Restaurant App Project
+- محمود سليمان توفيق ------ 1727017
+- محمد وحيد عبد المجيد ------ 1727171
+- ابراهيم ابو الحمد عبد الحميد ------ 1727107
+- عبد الرحمن عز الدين ------ 1727162
+- يوسف عبد الله ابو هريره ------ 1627057
