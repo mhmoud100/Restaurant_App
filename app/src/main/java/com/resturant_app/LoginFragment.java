@@ -1,6 +1,8 @@
 package com.resturant_app;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -32,6 +34,7 @@ public class LoginFragment extends Fragment {
     private EditText emailEditText, passwordEditText;
     private TextView messageTextView;
     GotoHome gotoHome;
+    TextView forgetPassword;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -46,14 +49,70 @@ public class LoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         messageLayout = view.findViewById(R.id.layout_message);
         loadingLayout = view.findViewById(R.id.layout_loading);
-
+        forgetPassword = view.findViewById(R.id.text_view_forgot_password);
         loginButton = view.findViewById(R.id.button_login);
         messageTextView = view.findViewById(R.id.text_view_message);
         okButton = view.findViewById(R.id.button_ok);
         emailEditText = view.findViewById(R.id.edit_text_email);
         passwordEditText = view.findViewById(R.id.edit_text_password);
 
+        forgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disableLoginLayout();
 
+                View resetPasswordLayout = LayoutInflater.from(getContext()).inflate(R.layout.reset_password_layout, null, false);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setView(resetPasswordLayout);
+                builder.setCancelable(true);
+
+                final AlertDialog alertDialog = builder.create();
+
+                alertDialog.show();
+
+                alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        enableLoginLayout();
+                    }
+                });
+
+                final EditText emailEditText = resetPasswordLayout.findViewById(R.id.edit_text_email);
+                Button sendEmailButton = resetPasswordLayout.findViewById(R.id.button_send_email);
+
+                sendEmailButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        String email = emailEditText.getText().toString().trim();
+
+                        if (email.isEmpty()) {
+                            alertDialog.dismiss();
+                            showMessage("The Email is Empty");
+                            return;
+                        }
+
+                        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                            alertDialog.dismiss();
+                            showMessage("Email is badly Formatted");
+                            return;
+                        }
+
+                        FirebaseAuth.getInstance().sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                alertDialog.dismiss();
+                                if (task.isSuccessful()) showMessage("Reset Email is sent");
+                                else showMessage(task.getException().getMessage());
+                            }
+                        });
+
+                    }
+                });
+
+            }
+        });
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

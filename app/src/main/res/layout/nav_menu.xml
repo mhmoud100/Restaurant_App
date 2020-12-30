@@ -28,7 +28,7 @@
             android:id="@+id/textname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hello Bro"
+            android:text="@string/hello"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="@color/black"/>
     </LinearLayout>
@@ -45,7 +45,7 @@
             android:id="@+id/home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Home"
+            android:text="@string/home"
             android:textColor="@color/black"
             android:padding="8dp"
             android:textAppearance="?android:textAppearanceMedium" />
@@ -53,7 +53,7 @@
             android:id="@+id/profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Profile"
+            android:text="@string/profile"
             android:textColor="@color/black"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
@@ -63,7 +63,7 @@
             android:id="@+id/cart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cart"
+            android:text="@string/cart"
             android:textColor="@color/black"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
@@ -73,7 +73,7 @@
             android:id="@+id/add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Product"
+            android:text="@string/add_product"
             android:textColor="@color/black"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
@@ -84,7 +84,7 @@
             android:id="@+id/logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Logout"
+            android:text="@string/logout"
             android:textColor="@color/black"
             android:padding="8dp"
             android:textAppearance="?android:textAppearanceMedium" />

@@ -29,7 +29,7 @@
         android:layout_below="@+id/edit_item_image"
         android:layout_marginTop="10dp"
         android:textSize="24sp"
-        android:text="Title:"
+        android:text="@string/title"
         android:textColor="@color/black"
         />
     <EditText
@@ -47,7 +47,7 @@
             android:layout_below="@+id/edit_text_item_title"
             android:layout_marginTop="10dp"
             android:textSize="24sp"
-            android:text="Description:"
+            android:text="@string/description"
             android:textColor="@color/black"
             />
     <EditText
@@ -65,7 +65,7 @@
             android:layout_below="@+id/edit_text_item_description"
             android:layout_marginTop="10dp"
             android:textSize="24sp"
-            android:text="Price:"
+            android:text="@string/price"
             android:textColor="@color/black"/>
         <EditText
         android:id="@+id/edit_text_item_price"
@@ -82,7 +82,7 @@
             android:layout_below="@+id/edit_text_item_price"
             android:layout_marginTop="10dp"
             android:textSize="24sp"
-            android:text="Arrival Time:"
+            android:text="@string/arrival_time"
             android:textColor="@color/black"
             />
     <EditText
@@ -99,7 +99,7 @@
             android:layout_below="@+id/edit_text_item_arrivalTime"
             android:layout_marginTop="10dp"
             android:textSize="24sp"
-            android:text="Rating:"
+            android:text="@string/rating"
             android:textColor="@color/black"
             />
     <EditText
@@ -117,7 +117,7 @@
             android:layout_below="@+id/edit_text_item_rating"
             android:layout_marginTop="10dp"
             android:textSize="24sp"
-            android:text="Grediants:"
+            android:text="@string/grediants"
             android:textColor="@color/black"
             />
     <EditText
@@ -132,7 +132,7 @@
             android:id="@+id/button_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Submit"
+            android:text="@string/submit"
             android:background="@drawable/button_selector"
             android:layout_below="@+id/edit_text_item_grediants"
             android:layout_marginTop="10dp"

@@ -2,6 +2,7 @@ package com.resturant_app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -96,6 +97,10 @@ public class RegisterFragment extends Fragment {
                                 if (task.isSuccessful()){
                                     final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
+                                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("file", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putBoolean("isAdmin", false);
+                                    editor.apply();
 
 
                                             User user = new User(false, new ArrayList<>(), new ArrayList<>());
@@ -114,6 +119,9 @@ public class RegisterFragment extends Fragment {
                                                                         @Override
                                                                         public void onComplete(@NonNull Task<Void> task) {
                                                                             if (task.isSuccessful()) {
+
+
+
                                                                                 gotoHome.GoToHome();
                                                                             }
                                                                         }
